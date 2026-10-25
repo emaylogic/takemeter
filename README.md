@@ -54,36 +54,65 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
+### Community and topic
+
+Community: r/QuitVaping on Reddit.
+
+Question: How do people describe the effects of quitting vaping?
+
 ### `label_one`
 
 **Definition:**
+- benefit_only: Describes an improvement attributed to quitting vaping, without describing a difficulty caused by quitting.
 
 **Example 1:**
->
+>oh absolutely i quit a couple months ago and noticed how much my stress has decreased. i ultimately quit because of the health scares it was causing when it would make my chest hurt.
 
 **Example 2:**
->
+>Since quitting 5 months ago my anxiety has improved so much it genuinely feels life changing, I had insomnia for months before quitting because of similar symptoms to you, gasping for air trying to get to sleep, I am soo much calmer now and have achieved things I didn't think possible because anxiety is that much less of a barrier these days
 
 ### `label_two`
 
 **Definition:**
+- difficulty_only: Describes a difficulty attributed to quitting vaping, without describing an improvement.
 
 **Example 1:**
->
+>I'm early in my journey (3 Days) but have already been struggling with sleep when usually my head's hits the pillow and I'm out. The last couple of nights I have simple been reading books to eventually get to the point of sleepiness.
 
 **Example 2:**
->
+>That’s very reassuring. It’s the main reason I relapse every time. I can handle everything else but the insomnia breaks me every single time. By week 2 I’m becoming a walking zombie. So miserable
+
+### `label_three`
+
+**Definition:**
+- mixed_effects: Describes both an improvement and a difficulty attributed to quitting vaping, including an early difficulty followed by recovery.
+
+**Example 1:**
+>I was fine at first, then all of a sudden I couldn't sleep more than an hour at a time. But it felt like I'd been asleep for hours! So I started incorporating these micro naps and working my life around them... Only for it to end and now I can sleep right through the night and still want more. So I think I'm still cycling through varieties of sleep issues, hopefully it'll settle eventually! Currently about 2.5 months free."
+
+**Example 2:**
+>63 days here the insomnia passed at week5 and turned into 10 hours of sleep, day 63 back to insomnia
+
+### Decision rules
+
+1. If both a benefit and a difficulty are described, use mixed_effects.
+2. If only a benefit is described, use benefit_only.
+3. If only a difficulty is described, use difficulty_only.
+4. Problems experienced while vaping do not count as difficulties caused by quitting.
+5. Do not assume that weight change or another neutral change is positive or negative. 
+6. Flag unclear comments for review rather than forcing a label.
+7. Exclude comments that contain no described effect of quitting.
+8. Classify the post description; do not judge whether a health claim is medically correct.
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** benefit_only and mixed_effects
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
 
-
-
+If a post describes both an improvement and a difficulty attributed to quitting vaping, label it mixed_effects, even if the difficulty happened earlier and has since improved. Use benefit_only when it describes an improvement without a difficulty attributed to quitting. Problems experienced while vaping do not count as difficulties caused by quitting.
 ---
 
 ## The Dataset

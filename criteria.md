@@ -51,63 +51,66 @@ whether you hit them:
 
 ---
 
-## 1.
+## 1. Overall accuracy
 
 <!-- Your criterion. It must name a number. -->
 
-
+The classifier achieves at least 70% accuracy on the held-out test set in each of the three Unit 6 runs.
+The model correctly labels at least 70% of held-out comments in each of the three Unit 6 runs.
 
 **Why this target:**
 
-
+Some comments describe both the difficult early days of quitting and improvements later on. Those will be harder to classify.
+I chose 70% because I want the model to get most comments right, including some of these less straightforward examples.
 
 ---
 
-## 2.
+## 2. Performance on each label
 
 <!-- Your criterion. -->
 
+Each label has an F1 score of at least 0.60 on the held-out test set in each of the three Unit 6 runs.
 
 
 **Why this target:**
 
-
+I want the model to recognize all three labels. Mixed-effects comments may be harder because they describe both benefits and difficulties. I chose 0.60 as the minimum acceptable score for each label so that none gets overlooked.
 
 ---
 
-## 3.
+## 3. Label balance
+
+Each label makes up at least 20% and no more than 60% of the final labeled dataset.
 
 <!-- Your criterion. -->
 
-
-
 **Why this target:**
 
-
+Comments describing only benefits may be easier to find than comments describing mixed effects. I want enough examples of each label for the model to learn all three. With 200 comments, this means at least 40 examples per label.
 
 ---
 
-## 4.
+## 4. Labeling consistency
 
 <!-- Your criterion. -->
 
-
+When I relabel 20 randomly selected comments without looking at my original labels or AI suggestions, at least 17 receive the same label.
 
 **Why this target:**
 
-
+A comment about early withdrawal followed by improvement could be mistaken for benefit_only instead of mixed_effects. Matching at least 17 out of 20 would give me some evidence that I can apply my decision rules consistently.
 
 ---
 
-## 5.
+## 5. Recognizing mixed effects
 
 <!-- Your criterion. -->
 
-
+The model identifies at least 60% of the comments labeled mixed_effects in the held-out test set in each of the three Unit 6 runs.
 
 **Why this target:**
 
-
+A comment may describe a difficult first week and improvements later. The model needs to recognize both parts instead of focusing only on the improvement. I want it to catch at least six out of ten mixed-effects comments.
 
 ---
 
