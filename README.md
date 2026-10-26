@@ -110,11 +110,11 @@ Question: How do people describe the effects of quitting vaping?
 
 **Which two labels:** benefit_only and mixed_effects
 
-**The decision rule I used every time:**
+**The decision rule I used every time:** 
+If a post describes both an improvement and a difficulty attributed to quitting vaping, label it mixed_effects, even if the difficulty happened earlier and has since improved. Use benefit_only when it describes an improvement without a difficulty attributed to quitting. Problems experienced while vaping do not count as difficulties caused by quitting.
+
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
-
-If a post describes both an improvement and a difficulty attributed to quitting vaping, label it mixed_effects, even if the difficulty happened earlier and has since improved. Use benefit_only when it describes an improvement without a difficulty attributed to quitting. Problems experienced while vaping do not count as difficulties caused by quitting.
 ---
 
 ## The Dataset
