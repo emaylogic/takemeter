@@ -42,7 +42,9 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+I built TakeMeter to classify comments from Reddit’s r/QuitVaping community by how people describe the effects of quitting vaping. 
+It sorts comments into benefit_only, difficulty_only, and mixed_effects. The labels describe what the commenter reports; they do not 
+verify whether a health claim is medically correct.
 
 ---
 
@@ -122,17 +124,23 @@ If a post describes both an improvement and a difficulty attributed to quitting 
 
 **Where the posts came from:**
 
+I collected 200 distinct comments from Reddit’s public r/QuitVaping community about the effects of quitting vaping.
+
+
 **How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
 Say so plainly — the disclosure is required, not penalised. -->
+
+I labeled the first 30 comments without any AI suggestions and marked the first 20 as cold. For the remaining comments,
+I reviewed AI suggestions and accepted or changed them using my taxonomy. I recorded the assistance in the note column.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| benefit_only | 91 | 45.5% |
+| difficulty_only | 67 | 33.5% |
+| mixed_effects | 42 | 21.0% |
+| **Total** | **200** | **100%** |
 
 **Three hard cases**
 
@@ -140,25 +148,28 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+>*The post:* “63 days here the insomnia passed at week5 and turned into 10 hours of sleep, day 63 back to insomnia”
 >
-> *Could have been:*
+> *Could have been:* difficulty_only or mixed_effects
 >
-> *I chose, because:*
+> *I chose, because:* I chose mixed_effects because the comment describes both insomnia and a period of recovery. My rule
+> counts earlier difficulties followed by improvement as mixed, even when the difficulty returns.
 
 **2.**
-> *The post:*
+> *The post:* “i quit with the patch as well. the first few days i had high anxiety.”
 >
-> *Could have been:*
+> *Could have been:* difficulty_only or excluded as coping advice
 >
-> *I chose, because:*
+> *I chose, because:* I chose difficulty_only because the writer describes anxiety during the first few days of quitting.
+> The rest of the comment offers advice about nicotine patches, but it still includes a reported difficulty and no clear benefit.
 
 **3.**
-> *The post:*
+> *The post (excerpt):* “Since quitting 5 months ago my anxiety has improved so much … I had insomnia for months before quitting”
 >
-> *Could have been:*
+> *Could have been:* benefit_only or mixed_effects
 >
-> *I chose, because:*
+> *I chose, because:* I chose benefit_only because the anxiety improved after quitting, while the insomnia happened before quitting. 
+> Mentioning a difficulty does not make a comment mixed unless that difficulty is attributed to quitting.
 
 ---
 
@@ -166,29 +177,55 @@ Say so plainly — the disclosure is required, not penalised. -->
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** distilbert-base-uncased
 
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
+- Epochs: 3
+- Learning rate: 0.00002
+- Batch size: 16
+- Maximum token length: 128
+- Seed: 42
+- Device: CPU
+- PyTorch version: 2.14.1+cpu
 
 **Anything I changed from the defaults, and why:**
+
+I kept the default training settings. I changed LABELS to match my three categories and the CSV path to data/labels.csv.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
-**Split sizes:**
 
-With seed 42, I have 139 training comments, 31 validation
-comments, and 30 test comments.
+With seed 42, I have 139 training comments, 31 validation comments, and 30 test comments.
 
 The test set contains:
 - benefit_only: 14
 - difficulty_only: 10
 - mixed_effects: 6
 
-With only 6 mixed_effects comments in the test set, a few
-mistakes could change that label’s score substantially
+With only 6 mixed_effects comments in the test set, a few mistakes could change that label’s score substantially
 between seeds.
+
+
+### First-run results
+
+The model correctly classified 14 of the 30 test comments.
+
+| Measure | Result |
+|---|---:|
+| Test accuracy | 46.7% |
+| Macro F1 | 0.212 |
+| benefit_only F1 | 0.636 |
+| difficulty_only F1 | 0.000 |
+| mixed_effects F1 | 0.000 |
+
+The model predicted benefit_only for every test comment. It completed training, but it has not learned to distinguish
+the three labels. The first run missed my accuracy, per-label F1, and mixed_effects recall targets.
+
+The evaluation metrics are saved in results.json, and the held-out comments are saved in test_split.csv.
+
 ---
+
 
 ## How I Used AI
 
@@ -201,17 +238,22 @@ between seeds.
 
 **Moment 1**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Help setting up the notebook for my vaping dataset.
+- *What came back:* Instructions to replace the practice labels with my three labels and point the notebook to data/labels.csv.
+- *What I changed:* I updated LABELS to benefit_only, difficulty_only, and mixed_effects, and corrected the CSV path.
 
 **Moment 2**
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+- *What I asked for:* Help checking my reviewed CSV before training.
+- *What came back:* AI identified blank labels, invalid label names, empty rows, and the number of usable comments.
+- *What I changed:* I corrected the labels, resolved the blank entries, removed empty rows, and added another real comment
+  to reach 200 examples.
 
 **Pre-labelling disclosure:**
+
+AI helped me develop the taxonomy and provided suggested labels and explanations for the collected comments. I labeled the first
+30 comments without viewing those suggestions and marked the first 20 as cold. For the remaining comments, I read the text,
+reviewed the suggestions, and accepted or changed the labels using my written rules. I recorded AI assistance in the note column.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
@@ -239,8 +281,6 @@ between seeds.
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
-
-
 
 ---
 
@@ -400,16 +440,16 @@ learned:**
 
      SUBMISSION CHECKLIST — unit 5
 
-       [ ] criteria.md has five numbered criteria, each naming a NUMBER
-       [ ] Each has a reason underneath tied to your data or taxonomy
-       [ ] labels.csv: at least 150 rows, text/label/note, ONE file not split
-       [ ] No label above 70%
-       [ ] All five unit 5 sections have real content
-       [ ] Label Taxonomy includes the decision rule for your hardest boundary
-       [ ] The Dataset includes three hard cases
-       [ ] results.json and test_split.csv committed (the notebook does this)
-       [ ] At least four new commits
-       [ ] Repository URL submitted — WRITE IT DOWN
+       [x] criteria.md has five numbered criteria, each naming a NUMBER
+       [x] Each has a reason underneath tied to your data or taxonomy
+       [x] labels.csv: at least 150 rows, text/label/note, ONE file not split
+       [x] No label above 70%
+       [x] All five unit 5 sections have real content
+       [x] Label Taxonomy includes the decision rule for your hardest boundary
+       [x] The Dataset includes three hard cases
+       [x] results.json and test_split.csv committed (the notebook does this)
+       [x] At least four new commits
+       [x] Repository URL submitted — WRITE IT DOWN
 
      SUBMISSION CHECKLIST — unit 6
 
