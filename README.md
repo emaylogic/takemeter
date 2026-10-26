@@ -175,9 +175,19 @@ Say so plainly — the disclosure is required, not penalised. -->
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
+**Split sizes:**
 
+With seed 42, I have 139 training comments, 31 validation
+comments, and 30 test comments.
 
+The test set contains:
+- benefit_only: 14
+- difficulty_only: 10
+- mixed_effects: 6
 
+With only 6 mixed_effects comments in the test set, a few
+mistakes could change that label’s score substantially
+between seeds.
 ---
 
 ## How I Used AI
